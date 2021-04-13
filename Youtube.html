@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Youtube</title>
+    </head>
+    <body>
+        <div id="player"></div>
+        <script type="text/javascript">
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var fs = document.getElementsByTagName('script')[0];
+        fs.parentNode.insertBefore(tag, fs);
+
+        var player;
+        function onYouTubeIframeAPIReady(){
+            player = new YT.Player('player', {
+                height: '320',
+                weight: '570',
+                videoId: 'cPf85p0aoXY',
+                playerVars: { 'autoplay':1, 'controls':1, 'showinfo':0, 'end':0, 'loop':1},
+                
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        var done = false;
+        function onPlayerStateChange(event){
+            if(event.data == YT.PlayerState.PAUSED && !done){
+                window.location.href = 'https://www.youtube.com/';
+                done = true;
+            }
+            else{
+                if(event.data == YT.PlayerState.ENDED && !done){
+                    player.playVideo();
+                }
+            }
+        }
+
+        function onPlayerReady(event){
+            player.mute();
+        }
+        </script>
+
+<script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : 'your-app-id',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v10.0'
+      });
+    };
+  </script>
+
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v10.0" nonce="czWthU0F"></script>
+        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="5"></div>
+    </body>
+</html>
